@@ -72,3 +72,6 @@ Steps:
 
 expected result:
 The field should ignore non-numerical input
+
+actually results:
+It did ignore the non-numerical inputs and only allowed numbers to be typed
