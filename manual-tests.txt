@@ -75,3 +75,16 @@ The field should ignore non-numerical input
 
 actually results:
 It did ignore the non-numerical inputs and only allowed numbers to be typed
+
+
+
+Ticket: Timeout Button Functionality
+1. Scan the card
+2. Observe the timeout button
+3. Press the timeout button
+4. Verify that the check-in or check-out process completes without waiting for full timeout.
+
+Expected results:
+The check-in or check-out process should complete immediately upon pressing the timeout button, bypassing the full timeout duration.
+
+Actual results:
