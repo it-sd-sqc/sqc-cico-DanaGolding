@@ -32,6 +32,9 @@ public class Main {
   private static final long TIMEOUT_PANEL_MS = 10 * 1000;
   private static final int TIMEOUT_STATEMENT_S = 5;
 
+  //maunual button
+  private static final String MANUAL_TIMEOUT_BUTTON_LABEL = "Check In/Out Now";
+
   // Internal classes ///////////////////////////////////////////////////////////
   // InputFilter manages user input to the card number field.
   private static class InputFilter extends DocumentFilter {
@@ -39,24 +42,30 @@ public class Main {
 
     @Override
     public void insertString(FilterBypass fb, int offset, String stringToAdd, AttributeSet attr)
-        throws BadLocationException
-    {
+        throws BadLocationException {
       if (fb.getDocument() != null) {
-        super.insertString(fb, offset, stringToAdd, attr);
-      }
-      else {
+        // Only allow numerical input
+        if (stringToAdd.matches("\\d*")) {
+          super.insertString(fb, offset, stringToAdd, attr);
+        } else {
+          Toolkit.getDefaultToolkit().beep();
+        }
+      } else {
         Toolkit.getDefaultToolkit().beep();
       }
     }
 
     @Override
     public void replace(FilterBypass fb, int offset, int lengthToDelete, String stringToAdd, AttributeSet attr)
-        throws BadLocationException
-    {
+            throws BadLocationException {
       if (fb.getDocument() != null) {
-        super.replace(fb, offset, lengthToDelete, stringToAdd, attr);
-      }
-      else {
+        // Only allow numerical input
+        if (stringToAdd.matches("\\d*")) {
+          super.replace(fb, offset, lengthToDelete, stringToAdd, attr);
+        } else {
+          Toolkit.getDefaultToolkit().beep();
+        }
+      } else {
         Toolkit.getDefaultToolkit().beep();
       }
     }
@@ -64,6 +73,8 @@ public class Main {
 
   // Lookup the card information after button press ///////////////////////////
   public static class Update implements ActionListener {
+
+
     public void actionPerformed(ActionEvent evt) {
       Main.processCard();
     }
@@ -318,6 +329,19 @@ public class Main {
     deck.add(panelStatus, CARD_STATE);
     deck.add(panelError, CARD_ERROR);
     frame.getContentPane().add(deck, BorderLayout.CENTER);
+
+    //Add the manual check-in/out button
+    JButton manualButton = new JButton(MANUAL_TIMEOUT_BUTTON_LABEL);
+    manualButton.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+    manualButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        Main.processCard();
+      }
+    });
+    panelMain.add(manualButton);
+
+
 
     // Module 2 ticket: Add version number.
     JLabel labelMeta = new JLabel("CiCo v" + VERSION);
