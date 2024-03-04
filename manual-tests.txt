@@ -86,3 +86,14 @@ Ticket: Timeout Button Functionality
 
 Expected results:
 The check-in or check-out process should complete immediately upon pressing the timeout button, bypassing the full timeout duration.
+
+# Module 6: Sample test for Flexibility and efficiency of use.
+
+## Test steps
+1. Build and run CiCo.
+2. Enter 00000000 into the field
+
+## Expected results:
+* The status panel should appear after step 2.
+* The status panel should display "Developer"
+
