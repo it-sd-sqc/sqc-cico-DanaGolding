@@ -43,10 +43,11 @@ public class Main {
     @Override
     public void insertString(FilterBypass fb, int offset, String stringToAdd, AttributeSet attr)
         throws BadLocationException {
-      if (fb.getDocument() != null) {
+      if (fb.getDocument() != null || fb.getDocument().getLength() < MAX_LENGTH) {
         // Only allow numerical input
         if (stringToAdd.matches("\\d*")) {
           super.insertString(fb, offset, stringToAdd, attr);
+          if (fb.getDocument().getLength() == MAX_LENGTH) Main.processCard();
         } else {
           Toolkit.getDefaultToolkit().beep();
         }
@@ -62,6 +63,7 @@ public class Main {
         // Only allow numerical input
         if (stringToAdd.matches("\\d*")) {
           super.replace(fb, offset, lengthToDelete, stringToAdd, attr);
+          if (fb.getDocument().getLength() == MAX_LENGTH) Main.processCard();
         } else {
           Toolkit.getDefaultToolkit().beep();
         }
@@ -72,13 +74,13 @@ public class Main {
   }
 
   // Lookup the card information after button press ///////////////////////////
-  public static class Update implements ActionListener {
-
-
-    public void actionPerformed(ActionEvent evt) {
-      Main.processCard();
-    }
-  }
+//  public static class Update implements ActionListener {
+//
+//
+//    public void actionPerformed(ActionEvent evt) {
+//      Main.processCard();
+//    }
+//  }
 
   // Revert to the main panel after a button press ////////////////////////////
   public static class Handler implements ActionListener {
@@ -271,11 +273,11 @@ public class Main {
     fieldNumber.setForeground(Color.magenta);
     panelMain.add(fieldNumber);
 
-    JButton updateButton = new JButton("Update");
-    updateButton.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-    updateButton.addActionListener(new Update());
-    updateButton.setForeground(Color.green);
-    panelMain.add(updateButton);
+//    JButton updateButton = new JButton("Update");
+//    updateButton.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+//    updateButton.addActionListener(new Update());
+//    updateButton.setForeground(Color.green);
+//    panelMain.add(updateButton);
 
     panelMain.add(Box.createVerticalGlue());
 
